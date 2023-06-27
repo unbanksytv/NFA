@@ -1,0 +1,39 @@
+{
+  "name": "@fleekxyz/non-fungible-apps",
+  "version": "0.0.1",
+  "description": "",
+  "private": "false",
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write \"./**/*.{js,json,sol,ts}\"",
+    "postinstall": "husky install",
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fleekxyz/non-fungible-apps.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fleekxyz/non-fungible-apps/issues"
+  },
+  "homepage": "https://github.com/fleekxyz/non-fungible-apps#readme",
+  "devDependencies": {
+    "@graphql-codegen/cli": "^2.16.4",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-filenames-simple": "^0.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "husky": "^8.0.2",
+    "pinst": "^3.0.0",
+    "prettier": "^2.8.4",
+    "prettier-plugin-solidity": "^1.0.0",
+    "serverless-offline": "^12.0.4",
+    "typescript": "^4.9.5"
+  }
+}

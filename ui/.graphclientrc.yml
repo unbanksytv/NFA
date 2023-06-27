@@ -1,0 +1,21 @@
+# .graphclientrc.yml
+sources:
+  - name: FleekNFA
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/emperororokusaki/second-test-subgraph
+
+  - name: ENS
+    handler:
+      graphql:
+        endpoint: https://api.thegraph.com/subgraphs/name/ensdomains/ens
+    transforms:
+      - rename:
+          - from:
+              type: Transfer
+            to:
+              type: ENSTransfer
+
+documents:
+  - ./graphql/*.graphql
+

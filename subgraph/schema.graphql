@@ -1,0 +1,135 @@
+type Approval @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  approved: Bytes! # address
+  tokenId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ApprovalForAll @entity(immutable: true) {
+  id: Bytes!
+  owner: Bytes! # address
+  operator: Bytes! # address
+  approved: Boolean! # bool
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type NewMint @entity(immutable: true) {
+  id: Bytes!
+  tokenId: BigInt! # uint256
+  name: String!
+  description: String!
+  externalURL: String!
+  ENS: String!
+  commitHash: String! # string
+  gitRepository: String! # string
+  ipfsHash: String!
+  logo: String!
+  color: Int!
+  accessPointAutoApproval: Boolean!
+  triggeredBy: Bytes! # address
+  owner: Owner! # address
+  verifier: Bytes!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type MetadataUpdate @entity(immutable: true) {
+  id: Bytes!
+  tokenId: BigInt!
+  key: String!
+  stringValue: String
+  uint24Value: Int
+  multipleStringValue: [String!]!
+  booleanValue: Boolean
+  byAddress: Bytes!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  tokenId: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Token @entity {
+  id: Bytes! # Token ID
+  mintTransaction: NewMint!
+  tokenId: BigInt! # uint256
+  name: String!
+  description: String!
+  externalURL: String!
+  ENS: String!
+  logo: String!
+  color: Int!
+  accessPointAutoApproval: Boolean!
+  owner: Owner!
+  mintedBy: Bytes!
+  controllers: [Controller!]
+  accessPoints: [AccessPoint!] @derivedFrom(field: "token")
+  verifier: Verifier # Address
+  verified: Boolean!
+  createdAt: BigInt!
+  builds: [Build!]!
+}
+
+type Build @entity {
+  id: Bytes! # Token ID
+  gitRepository: GitRepository!
+  commitHash: String!
+  ipfsHash: String!
+  domain: String!
+  token: Token! @derivedFrom(field: "builds")
+}
+
+# Owner entity for collection, access points, and tokens
+type Owner @entity {
+  id: Bytes! # address
+  tokens: [Token!] @derivedFrom(field: "owner")
+  accessPoints: [AccessPoint!] @derivedFrom(field: "owner")
+  collection: Boolean!
+}
+
+# Controller entity for tokens
+type Controller @entity {
+  id: Bytes! # address
+  tokens: [Token!] @derivedFrom(field: "controllers")
+}
+
+# Verifier entity for tokens
+type Verifier @entity {
+  id: Bytes! # address
+  tokens: [Token!] @derivedFrom(field: "verifier")
+}
+
+type GitRepository @entity {
+  id: String! # transaction hash of the first transaction this repository appeared in
+  builds: [Build!] @derivedFrom(field: "gitRepository")
+}
+
+type AccessPoint @entity {
+  id: String! # AP Name
+  token: Token!
+  score: BigInt!
+  contentVerified: Boolean!
+  nameVerified: Boolean!
+  owner: Owner!
+  creationStatus: String!
+  createdAt: BigInt!
+}
+
+type Collection @entity {
+  id: Bytes!
+  totalTokens: BigInt!
+}
